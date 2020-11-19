@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <button onclick="ajax_get_json()">Hazme Click !</button>
+  <div id="info"></div>
+
+  <script type="text/jscript">
+  var resultado = document.getElementById('info');
+    function ajax_get_json(){
+      var xmlhttp;
+
+      if(window.XMLHttpRequest){
+        xmlhttp = new XMLHttpRequest();
+      }else{
+        xmlhttp = new ActiveXObject('Microsoft.XMLHTTP');
+      }
+
+      xmlhttp.onreadystatechange = function(){
+        if(xmlhttp.readyState === 4 && xmlhttp.status === 200){
+          var datos = JSON.parse(xmlhttp.responseText);
+          if(resultado.innerHTML.length < 1){
+            for(i=0;i<datos.length;i++){
+            resultado.innerHTML += 'id : ' + datos[i].id + ' titulo del post : '
+             + datos[i].title + '<br/>';
+            }
+            console.log(datos);
+            console.log(xmlhttp.status);
+            console.log(xmlhttp.readyState);
+          }else{
+            console.log("No se pudo cargar los datos por que ya estan en pantalla");
+          }
+          
+        }
+      }
+      xmlhttp.open("GET", "https://my-json-server.typicode.com/typicode/demo/posts", true);
+      xmlhttp.send();
+    }
+  </script>
+</body>
+</html>
